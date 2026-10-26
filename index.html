@@ -1,0 +1,394 @@
+<title>Rudra Patel</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+  /* layout: sticky instrument-panel nav, hero with bracketed photo, timeline + card grid below, dashboard-style readouts */
+  :root{
+    --bg:#EDEFF2; --bg-panel:#FFFFFF; --bg-raised:#F6F7F9;
+    --fg:#14181F; --fg-muted:#525A66; --fg-faint:#848E9C;
+    --accent:#B85F15; --accent-2:#0E7C7B;
+    --border:#D7DBE1; --border-strong:#B9C0CA;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#12151A; --bg-panel:#1B1F26; --bg-raised:#20252D;
+      --fg:#EDEFF2; --fg-muted:#9AA3AF; --fg-faint:#6B7481;
+      --accent:#F2A646; --accent-2:#5FD9C6;
+      --border:rgba(255,255,255,0.09); --border-strong:rgba(255,255,255,0.16);
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12151A; --bg-panel:#1B1F26; --bg-raised:#20252D;
+    --fg:#EDEFF2; --fg-muted:#9AA3AF; --fg-faint:#6B7481;
+    --accent:#F2A646; --accent-2:#5FD9C6;
+    --border:rgba(255,255,255,0.09); --border-strong:rgba(255,255,255,0.16);
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg); color:var(--fg);
+    font-family:'Work Sans','Segoe UI',sans-serif;
+    padding-left:max(16px, env(safe-area-inset-left,0px));
+    padding-right:max(16px, env(safe-area-inset-right,0px));
+  }
+  body::before{
+    content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px);
+    z-index:10; background:var(--bg);
+  }
+  h1,h2,h3{font-family:'Big Shoulders Display','Arial Narrow',sans-serif; text-wrap:balance; margin:0; letter-spacing:.01em;}
+  .mono{font-family:'IBM Plex Mono','Consolas',monospace;}
+  a{color:var(--accent);}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  p{line-height:1.6; color:var(--fg-muted); max-width:62ch;}
+  .wrap{max-width:980px; margin:0 inset; margin-inline:auto;}
+  section{padding-block:56px; border-bottom:1px solid var(--border);}
+  section:last-of-type{border-bottom:none;}
+  .eyebrow{
+    font-family:'IBM Plex Mono','Consolas',monospace; font-size:12px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--accent-2); display:flex; align-items:center; gap:8px; margin-bottom:14px;
+  }
+  .eyebrow::before{content:""; width:7px; height:7px; background:var(--accent-2); border-radius:1px; display:inline-block;}
+
+  /* nav */
+  nav{
+    position:sticky; top:env(safe-area-inset-top,0px); z-index:9;
+    background:var(--bg); border-bottom:1px solid var(--border);
+    padding-block:14px;
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+  .brand{font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:15px; letter-spacing:.04em;}
+  .brand span{color:var(--accent);}
+  .navlinks{display:flex; gap:22px; flex-wrap:wrap; list-style:none; margin:0; padding:0;}
+  .navlinks a{color:var(--fg-muted); text-decoration:none; font-size:14px; font-weight:500;}
+  .navlinks a:hover{color:var(--fg);}
+  .status{
+    display:flex; align-items:center; gap:7px; font-family:'IBM Plex Mono',monospace; font-size:11px;
+    color:var(--fg-muted); border:1px solid var(--border-strong); border-radius:3px; padding:5px 9px;
+  }
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--accent-2); box-shadow:0 0 0 3px color-mix(in srgb, var(--accent-2) 25%, transparent);}
+  @media (prefers-reduced-motion:no-preference){ .dot{animation:pulse 2.2s ease-in-out infinite;} }
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.45;}}
+
+  /* hero */
+  .hero{padding-block:64px 56px;}
+  .hero .wrap{display:flex; gap:48px; align-items:center; flex-wrap:wrap;}
+  .hero-text{flex:1 1 380px; min-width:0;}
+  .hero-text .role{color:var(--accent); font-family:'IBM Plex Mono',monospace; font-size:14px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:10px;}
+  .hero-text h1{font-size:clamp(44px,8vw,78px); line-height:.95; text-transform:uppercase;}
+  .hero-text .tagline{margin-top:18px; font-size:17px;}
+  .hero-actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:26px;}
+  .btn{
+    font-family:'IBM Plex Mono',monospace; font-size:13px; padding:11px 18px; border-radius:3px;
+    text-decoration:none; border:1px solid var(--border-strong); color:var(--fg); display:inline-flex; align-items:center; gap:8px;
+    background:var(--bg-panel); cursor:pointer;
+  }
+  .btn.primary{background:var(--accent); border-color:var(--accent); color:#1A1206;}
+  .btn:hover{border-color:var(--accent);}
+  .photo-frame{position:relative; flex:0 0 auto; width:min(230px, 42vw);}
+  .photo-frame img{width:100%; aspect-ratio:3/4; object-fit:cover; display:block; border-radius:2px;}
+  .photo-frame::before, .photo-frame::after, .photo-frame i::before, .photo-frame i::after{
+    content:""; position:absolute; width:22px; height:22px; border:2px solid var(--accent);
+  }
+  .photo-frame::before{top:-8px; left:-8px; border-right:none; border-bottom:none;}
+  .photo-frame::after{bottom:-8px; right:-8px; border-left:none; border-top:none;}
+
+  /* about */
+  .about-grid{display:flex; gap:40px; flex-wrap:wrap;}
+  .about-grid p{flex:1 1 360px;}
+  .edu-card{
+    flex:0 1 280px; min-width:240px; background:var(--bg-panel); border:1px solid var(--border);
+    border-radius:4px; padding:18px 20px;
+  }
+  .edu-card .mono{font-size:12px; color:var(--fg-faint); text-transform:uppercase; letter-spacing:.08em;}
+  .edu-card h3{font-size:22px; margin-top:6px; text-transform:none;}
+  .edu-card .gpa{color:var(--accent-2); font-family:'IBM Plex Mono',monospace; font-size:14px; margin-top:8px;}
+
+  /* experience */
+  .timeline{display:flex; flex-direction:column; gap:0;}
+  .job{display:grid; grid-template-columns:150px 1fr; gap:24px; padding-block:26px; border-top:1px solid var(--border);}
+  .job:first-child{border-top:none;}
+  .job .when{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--fg-faint); padding-top:3px;}
+  .job h3{font-size:22px; text-transform:none;}
+  .job .co{color:var(--accent); font-size:14px; font-weight:600; margin-top:2px;}
+  .job ul{margin:12px 0 0; padding-left:18px; color:var(--fg-muted);}
+  .job li{margin-bottom:6px; line-height:1.55;}
+  @media (max-width:640px){ .job{grid-template-columns:1fr; gap:6px;} }
+
+  /* projects */
+  .pgrid{display:grid; grid-template-columns:repeat(auto-fill, minmax(270px,1fr)); gap:18px;}
+  .card{
+    background:var(--bg-panel); border:1px solid var(--border); border-radius:4px; padding:20px;
+    display:flex; flex-direction:column; min-width:0;
+  }
+  .card .tag{
+    align-self:flex-start; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--accent-2); border:1px solid var(--border-strong); border-radius:2px; padding:3px 7px; margin-bottom:12px;
+  }
+  .card h3{font-size:19px; text-transform:none; margin-bottom:4px;}
+  .card .yr{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--fg-faint);}
+  .card p{font-size:14px; margin-top:10px; flex:1;}
+  .card .stack{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--fg-faint); margin-top:12px;}
+  .card a.link{font-size:13px; margin-top:14px; display:inline-block; font-weight:600;}
+
+  /* currently running */
+  .now-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;}
+  .now-card{background:var(--bg-raised); border-left:3px solid var(--accent); border-radius:2px; padding:18px 20px;}
+  .now-card h3{font-size:16px; text-transform:none; font-family:'Work Sans',sans-serif; font-weight:600;}
+  .now-card p{font-size:14px; margin-top:8px;}
+
+  /* skills */
+  .skill-groups{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:28px;}
+  .skill-groups h3{font-size:13px; font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.08em; color:var(--fg-faint); font-weight:500; margin-bottom:12px;}
+  .chips{display:flex; flex-wrap:wrap; gap:7px;}
+  .chip{
+    font-size:13px; padding:5px 10px; border:1px solid var(--border-strong); border-radius:2px; color:var(--fg);
+    background:var(--bg-panel);
+  }
+
+  /* contact */
+  .contact-row{display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-top:20px;}
+  footer{padding-block:28px 48px;}
+  footer p{font-size:13px; color:var(--fg-faint);}
+
+  [hidden]{display:none!important;}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<nav>
+  <div class="wrap">
+    <div class="brand">RUDRA<span>.</span>PATEL</div>
+    <ul class="navlinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="status"><span class="dot"></span>Open to DevRel &amp; SWE roles</div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <div class="role">Software Engineer I · Mercedes-Benz / Daimler Truck</div>
+      <h1>Rudra<br>Patel</h1>
+      <p class="tagline">I build for whatever platform the problem needs — web, desktop, or embedded. Right now that's AI-assisted diagnostics tooling for vehicle engineering teams.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="https://github.com/RudraP272812" target="_blank" rel="noopener">View GitHub ↗</a>
+        <button class="btn" id="copyEmailBtn" type="button">Copy Email</button>
+      </div>
+    </div>
+    <div class="photo-frame"><i></i>
+      <img src="assets/photo.jpg" alt="Portrait of Rudra Patel">
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="eyebrow">about</div>
+    <div class="about-grid">
+      <p>I'm a software engineer who works across the stack and across platforms — full-stack web services, Windows desktop apps, and embedded/ECU diagnostics. At Mercedes-Benz / Daimler Truck I build internal diagnostic and logging tools and use AI to cut down manual troubleshooting time. Before that, I built plant-monitoring and safety software at Linamar that saved real time and money on the shop floor. I like explaining complex systems in plain language, whether that's a code review, documentation, or mentoring another developer — which is also why I'm looking to move into developer relations.</p>
+      <div class="edu-card">
+        <div class="mono">Education</div>
+        <h3>Fanshawe College</h3>
+        <p style="margin-top:8px; font-size:14px;">Advanced Diploma, Computer Programming<br>Graduated Dec 2025</p>
+        <div class="gpa">GPA 3.977 · Dean's List 2022–2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="eyebrow">experience_log</div>
+    <div class="timeline">
+      <div class="job">
+        <div class="when">Jan 2026 —<br>Present</div>
+        <div>
+          <h3>Software Engineer I</h3>
+          <div class="co">Mercedes-Benz / Daimler Truck</div>
+          <ul>
+            <li>Build and maintain full-stack web services (C#/.NET, JavaScript/TypeScript) for internal vehicle diagnostics and logging tools.</li>
+            <li>Apply AI/ML to automate analysis of ECU diagnostic and logging data (NexiqLogging), cutting manual troubleshooting time.</li>
+            <li>Containerize services with Docker and manage CI/CD pipelines for testing and deployment.</li>
+            <li>Document internal tools and APIs; collaborate with engineering teams through Git-based workflows.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="job">
+        <div class="when">May 2025 —<br>Aug 2025</div>
+        <div>
+          <h3>Software Developer Co-op</h3>
+          <div class="co">PowerCor Linamar, Guelph, ON</div>
+          <ul>
+            <li>Developed a Blazor app using the MVVM pattern for plant-operations data visualization.</li>
+            <li>Automated daily reporting with a custom console application.</li>
+            <li>Built Windows Forms apps to capture real-time sensor data and generate reports across multiple plants.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="job">
+        <div class="when">Jan–Apr 2024<br>&amp; Sep–Dec 2024</div>
+        <div>
+          <h3>Software Developer Co-op</h3>
+          <div class="co">Skyjack Linamar, Guelph, ON</div>
+          <ul>
+            <li>Designed WPF applications in C# and .NET Core to support business operations.</li>
+            <li>Built a fingerprint-based authentication system with encrypted SQL storage.</li>
+            <li>Collaborated with cross-functional teams to deliver user-friendly solutions.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="job">
+        <div class="when">Jan 2023 —<br>Dec 2023</div>
+        <div>
+          <h3>Peer Tutor</h3>
+          <div class="co">Fanshawe College, London, ON</div>
+          <ul>
+            <li>Mentored peers one-on-one and in groups on Java, C++, and Python fundamentals.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="eyebrow">project_manifest</div>
+    <div class="pgrid">
+      <div class="card">
+        <span class="tag">Work · Linamar</span>
+        <span class="yr">2025</span>
+        <h3>LMOS</h3>
+        <p>Linamar Manufacturing Operating System. Blazor/C# modules for live production monitoring, automated reporting, and real-time sensor integration across multiple plants — contributed to $33,000 in annual savings.</p>
+        <div class="stack">C# · Blazor · MVVM · Windows Forms</div>
+      </div>
+      <div class="card">
+        <span class="tag">Work · Linamar</span>
+        <span class="yr">2024</span>
+        <h3>Incident Reporting System</h3>
+        <p>Workplace safety reporting system with automated PDF generation, real-time email notifications, and bilingual (EN/FR) support.</p>
+        <div class="stack">C# · .NET Core · WPF · SQL</div>
+      </div>
+      <div class="card">
+        <span class="tag">Open Source</span>
+        <span class="yr">2026</span>
+        <h3>ClaudeSessionManager</h3>
+        <p>View, search, and bulk-delete archived Claude Code CLI session history on Windows. Free, open source, no telemetry.</p>
+        <div class="stack">C#</div>
+        <a class="link" href="https://github.com/RudraP272812/ClaudeSessionManager" target="_blank" rel="noopener">github.com ↗</a>
+      </div>
+      <div class="card">
+        <span class="tag">Open Source</span>
+        <span class="yr">2025</span>
+        <h3>Background Remover</h3>
+        <p>Local desktop app that removes image backgrounds fully offline — no internet connection required.</p>
+        <div class="stack">Python</div>
+        <a class="link" href="https://github.com/RudraP272812/Remove-Background-Local-App-Using-Python" target="_blank" rel="noopener">github.com ↗</a>
+      </div>
+      <div class="card">
+        <span class="tag">Open Source</span>
+        <span class="yr">2024</span>
+        <h3>3D Portfolio</h3>
+        <p>An earlier personal portfolio site built with Three.js for 3D visuals, on Vite and React.</p>
+        <div class="stack">JavaScript · Three.js · React · Vite</div>
+        <a class="link" href="https://github.com/RudraP272812/3Dportfolio" target="_blank" rel="noopener">github.com ↗</a>
+      </div>
+      <div class="card">
+        <span class="tag">Venture</span>
+        <span class="yr">Ongoing</span>
+        <h3>Craftymation</h3>
+        <p>Co-built the brand, website, and social presence for an online product business — branding, site design in Canva, and running Instagram/Facebook/Telegram to sell products.</p>
+        <div class="stack">Canva · Branding · Social Media</div>
+        <a class="link" href="https://www.instagram.com/craftymation.usa" target="_blank" rel="noopener">instagram ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="now">
+  <div class="wrap">
+    <div class="eyebrow">currently_running</div>
+    <div class="now-grid">
+      <div class="now-card">
+        <h3>AI-assisted diagnostics tooling</h3>
+        <p>Building out NexiqLogging and other internal tools at Mercedes-Benz / Daimler Truck that use AI/ML to speed up ECU diagnostic analysis.</p>
+      </div>
+      <div class="now-card">
+        <h3>Craftymation</h3>
+        <p>Growing the brand's online store and social channels — new product drops and content on Instagram, Facebook, and Telegram.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="eyebrow">skills_readout</div>
+    <div class="skill-groups">
+      <div>
+        <h3>Languages &amp; Frameworks</h3>
+        <div class="chips">
+          <span class="chip">Java</span><span class="chip">C++</span><span class="chip">C#</span><span class="chip">Python</span>
+          <span class="chip">JavaScript/TypeScript</span><span class="chip">React</span><span class="chip">Node.js</span>
+          <span class="chip">SQL</span><span class="chip">HTML/CSS</span><span class="chip">.NET Core</span>
+          <span class="chip">WPF</span><span class="chip">Blazor</span>
+        </div>
+      </div>
+      <div>
+        <h3>AI/ML &amp; Dev Tooling</h3>
+        <div class="chips">
+          <span class="chip">AI/ML Integration</span><span class="chip">REST APIs</span><span class="chip">Docker</span>
+          <span class="chip">CI/CD</span><span class="chip">Git/GitHub</span><span class="chip">Postman</span>
+        </div>
+      </div>
+      <div>
+        <h3>Other</h3>
+        <div class="chips">
+          <span class="chip">AWS</span><span class="chip">Embedded/ECU Diagnostics</span><span class="chip">NoSQL</span>
+          <span class="chip">Ubuntu Linux</span><span class="chip">Windows</span><span class="chip">Unity</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="border-bottom:none;">
+  <div class="wrap">
+    <div class="eyebrow">contact</div>
+    <h2 style="font-size:clamp(28px,5vw,44px); text-transform:uppercase;">Let's build something.</h2>
+    <div class="contact-row">
+      <a class="btn primary" href="https://github.com/RudraP272812" target="_blank" rel="noopener">GitHub ↗</a>
+      <button class="btn" id="copyEmailBtn2" type="button">rudrapatel2812.ca@gmail.com</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Rudra Patel. Built for a portfolio review — hosted live as a shareable page.</p>
+  </div>
+</footer>
+
+<script>
+  function copyEmail(btn){
+    var email = 'rudrapatel2812.ca@gmail.com';
+    var original = btn.textContent;
+    function flash(ok){
+      btn.textContent = ok ? 'Copied!' : email;
+      setTimeout(function(){ btn.textContent = original; }, 1500);
+    }
+    try{
+      navigator.clipboard.writeText(email).then(function(){ flash(true); }).catch(function(){ flash(false); });
+    }catch(e){ flash(false); }
+  }
+  ['copyEmailBtn','copyEmailBtn2'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el){ el.addEventListener('click', function(){ copyEmail(el); }); }
+  });
+</script>
